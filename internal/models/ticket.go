@@ -11,12 +11,10 @@ type ListTicket []Ticket
 type Ticket struct {
 	ID             int64     `gorm:"column:id"`
 	ExpiresAt      time.Time `gorm:"column:expires_at"`
-	CarID          int64     `gorm:"column:car_id"`
 	ClientID       int64     `gorm:"column:client_id"`
 	ParkingPlaceID int64     `gorm:"column:parking_place_id"`
 
 	Client       *Client
-	Car          *Car
 	ParkingPlace *ParkingPlace
 }
 
@@ -33,14 +31,10 @@ func (t Ticket) ToView() views.TicketDetailView {
 		ID:             t.ID,
 		ExpiresAt:      t.ExpiresAt.Format(consts.CustomFormat),
 		ClientID:       t.ClientID,
-		CarID:          t.CarID,
 		ParkingPlaceID: t.ParkingPlaceID,
 	}
 	if t.Client != nil {
 		view.Client = t.Client.ToView()
-	}
-	if t.Car != nil {
-		view.Car = t.Car.ToView()
 	}
 	if t.ParkingPlace != nil {
 		view.ParkingPlace = t.ParkingPlace.ToView()
@@ -54,16 +48,11 @@ func (list ListTicket) ToView() (result []views.TicketListView) {
 			ID:             t.ID,
 			ExpiresAt:      t.ExpiresAt.Format(consts.CustomFormat),
 			ClientID:       t.ClientID,
-			CarID:          t.CarID,
 			ParkingPlaceID: t.ParkingPlaceID,
 		}
 		if t.Client != nil {
 			view.FirstName = t.Client.ToView().FirstName
 			view.LastName = t.Client.ToView().LastName
-		}
-		if t.Car != nil {
-			view.CarTitle = t.Car.Title
-			view.CarPlate = t.Car.Plate
 		}
 		if t.ParkingPlace != nil {
 			view.ParkingNumber = t.ParkingPlace.ToView().Number

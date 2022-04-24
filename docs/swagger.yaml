@@ -7,14 +7,11 @@ definitions:
     type: object
   dtos.BuyTicketDTO:
     properties:
-      car_id:
-        type: integer
       parking_place_id:
         type: integer
       tax_id:
         type: integer
     required:
-    - car_id
     - parking_place_id
     - tax_id
     type: object
@@ -221,10 +218,6 @@ definitions:
     type: object
   views.TicketDetailView:
     properties:
-      car:
-        $ref: '#/definitions/views.CarDetailView'
-      car_id:
-        type: integer
       client:
         $ref: '#/definitions/views.ClientView'
       client_id:

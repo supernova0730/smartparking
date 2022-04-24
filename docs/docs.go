@@ -835,14 +835,10 @@ const docTemplate = `{
         "dtos.BuyTicketDTO": {
             "type": "object",
             "required": [
-                "car_id",
                 "parking_place_id",
                 "tax_id"
             ],
             "properties": {
-                "car_id": {
-                    "type": "integer"
-                },
                 "parking_place_id": {
                     "type": "integer"
                 },
@@ -1160,12 +1156,6 @@ const docTemplate = `{
         "views.TicketDetailView": {
             "type": "object",
             "properties": {
-                "car": {
-                    "$ref": "#/definitions/views.CarDetailView"
-                },
-                "car_id": {
-                    "type": "integer"
-                },
                 "client": {
                     "$ref": "#/definitions/views.ClientView"
                 },

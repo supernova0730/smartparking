@@ -8,6 +8,5 @@ type TicketUpdateDTO struct {
 
 type BuyTicketDTO struct {
 	TaxID          int64 `json:"tax_id" validate:"required"`
-	CarID          int64 `json:"car_id" validate:"required"`
 	ParkingPlaceID int64 `json:"parking_place_id" validate:"required"`
 }

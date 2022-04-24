@@ -36,7 +36,12 @@ func (s *coreService) Check(filename string, image *bytes.Buffer, parkingZoneID 
 		return
 	}
 
-	ticket, err := s.m.Service().Ticket().GetByParkingZoneCarClientIDs(parkingZoneID, car.ID, car.ClientID)
+	if !car.IsActive {
+		err = apiError.Throw(apiError.CarIsNotActive)
+		return
+	}
+
+	ticket, err := s.m.Service().Ticket().GetByParkingZoneClientIDs(parkingZoneID, car.ClientID)
 	if err != nil {
 		return
 	}

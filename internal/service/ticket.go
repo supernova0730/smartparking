@@ -48,20 +48,19 @@ func (s *ticketService) GetBy(where models.Ticket) (result models.Ticket, err er
 	return
 }
 
-func (s *ticketService) GetByParkingZoneCarClientIDs(parkingZoneID, carID, clientID int64) (result models.Ticket, err error) {
+func (s *ticketService) GetByParkingZoneClientIDs(parkingZoneID, clientID int64) (result models.Ticket, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error(
 				"ticketService.GetByParkingZoneCarClientIDs failed",
 				zap.Error(err),
 				zap.Int64("parkingZoneID", parkingZoneID),
-				zap.Int64("carID", carID),
 				zap.Int64("clientID", clientID),
 			)
 		}
 	}()
 
-	result, err = s.m.Repository().Ticket().GetByParkingZoneCarClientIDs(parkingZoneID, carID, clientID)
+	result, err = s.m.Repository().Ticket().GetByParkingZoneClientIDs(parkingZoneID, clientID)
 	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
 		err = apiError.Throw(apiError.TicketNotFound)
 	}
@@ -114,20 +113,9 @@ func (s *ticketService) BuyTicket(clientID int64, buyTicket dtos.BuyTicketDTO) (
 		return
 	}
 
-	car, err := s.m.Service().Car().GetByID(buyTicket.CarID)
-	if err != nil {
-		return
-	}
-
-	if car.ClientID != clientID {
-		err = apiError.Throw(apiError.NotYourCar)
-		return
-	}
-
 	model := models.Ticket{
 		ExpiresAt:      time.Now().Add(tax.Duration),
 		ClientID:       clientID,
-		CarID:          car.ID,
 		ParkingPlaceID: parkingPlace.ID,
 	}
 

@@ -53,13 +53,12 @@ func (repo *ticketRepository) GetBy(where models.Ticket) (result models.Ticket, 
 	return
 }
 
-func (repo *ticketRepository) GetByParkingZoneCarClientIDs(parkingZoneID, carID, clientID int64) (result models.Ticket, err error) {
+func (repo *ticketRepository) GetByParkingZoneClientIDs(parkingZoneID, clientID int64) (result models.Ticket, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("ticketRepository.GetByParkingZoneCarClientIDs failed",
 				zap.Error(err),
 				zap.Int64("parkingZoneID", parkingZoneID),
-				zap.Int64("carID", carID),
 				zap.Int64("clientID", clientID),
 			)
 		}
@@ -70,7 +69,6 @@ func (repo *ticketRepository) GetByParkingZoneCarClientIDs(parkingZoneID, carID,
 		Table("ticket AS t").
 		Joins("LEFT JOIN parking_place pp ON pp.id = t.parking_place_id").
 		Where("pp.parking_zone_id = ?", parkingZoneID).
-		Where("t.car_id = ?", carID).
 		Where("t.client_id = ?", clientID).
 		Where("not pp.is_busy").
 		First(&result).
