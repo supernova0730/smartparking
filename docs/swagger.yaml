@@ -1,0 +1,771 @@
+basePath: /api/v1/
+definitions:
+  controllers.ImageResponse:
+    properties:
+      image:
+        type: string
+    type: object
+  dtos.BuyTicketDTO:
+    properties:
+      car_id:
+        type: integer
+      parking_place_id:
+        type: integer
+      tax_id:
+        type: integer
+    required:
+    - car_id
+    - parking_place_id
+    - tax_id
+    type: object
+  dtos.CheckEmailVerificationDTO:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  dtos.ForgetPasswordDTO:
+    properties:
+      email:
+        type: string
+      new_password:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - new_password
+    type: object
+  dtos.LoginDTO:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  dtos.PersonalCarCreateDTO:
+    properties:
+      plate:
+        type: string
+      title:
+        type: string
+    required:
+    - plate
+    - title
+    type: object
+  dtos.RefreshTokenDTO:
+    properties:
+      refresh_token:
+        type: string
+    type: object
+  dtos.RegisterDTO:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        minLength: 8
+        type: string
+      phone:
+        type: string
+    required:
+    - email
+    - first_name
+    - last_name
+    - password
+    - phone
+    type: object
+  response.CommonResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  response.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  validate.ValidationError:
+    properties:
+      failed_field:
+        type: string
+      tag:
+        type: string
+      value:
+        type: string
+    type: object
+  views.CarDetailView:
+    properties:
+      client:
+        $ref: '#/definitions/views.ClientView'
+      client_id:
+        type: integer
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      plate:
+        type: string
+      title:
+        type: string
+    type: object
+  views.CarListView:
+    properties:
+      client_id:
+        type: integer
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      plate:
+        type: string
+      title:
+        type: string
+    type: object
+  views.ClientView:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      number_of_cars:
+        type: integer
+      phone:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  views.ParkingPlaceDetailView:
+    properties:
+      id:
+        type: integer
+      is_busy:
+        type: boolean
+      number:
+        type: string
+      parking_zone:
+        $ref: '#/definitions/views.ParkingZoneView'
+      parking_zone_id:
+        type: integer
+    type: object
+  views.ParkingPlaceListView:
+    properties:
+      id:
+        type: integer
+      is_busy:
+        type: boolean
+      number:
+        type: string
+      parking_zone_id:
+        type: integer
+    type: object
+  views.ParkingZoneView:
+    properties:
+      id:
+        type: integer
+      image:
+        type: string
+      title:
+        type: string
+    type: object
+  views.PersonalEntryHistoryListView:
+    properties:
+      car_plate:
+        type: string
+      car_title:
+        type: string
+      entry_time:
+        type: string
+      id:
+        type: integer
+      parking_zone_title:
+        type: string
+    type: object
+  views.PersonalTicketListView:
+    properties:
+      expires:
+        type: string
+      id:
+        type: integer
+      parking_number:
+        type: string
+      parking_zone_image:
+        type: string
+      parking_zone_title:
+        type: string
+    type: object
+  views.TaxView:
+    properties:
+      duration:
+        type: string
+      id:
+        type: integer
+      price:
+        type: integer
+      title:
+        type: string
+    type: object
+  views.TicketDetailView:
+    properties:
+      car:
+        $ref: '#/definitions/views.CarDetailView'
+      car_id:
+        type: integer
+      client:
+        $ref: '#/definitions/views.ClientView'
+      client_id:
+        type: integer
+      expires_at:
+        type: string
+      id:
+        type: integer
+      parking_place:
+        $ref: '#/definitions/views.ParkingPlaceDetailView'
+      parking_place_id:
+        type: integer
+    type: object
+  views.TokensView:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+info:
+  contact:
+    email: kuanysheveldar123@gmail.com
+    name: API Support
+  description: API documentation of smartparking service
+  title: SMART PARKING API
+  version: 0.0.1
+paths:
+  /auth/forget-password:
+    post:
+      consumes:
+      - application/json
+      description: forget password step 1
+      parameters:
+      - description: ForgetPasswordDTO
+        in: body
+        name: forgetPasswordDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ForgetPasswordDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CommonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/validate.ValidationError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - auth
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: client login route
+      parameters:
+      - description: LoginDTO
+        in: body
+        name: loginDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.LoginDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.TokensView'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/validate.ValidationError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - auth
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: refresh tokens
+      parameters:
+      - description: RefreshTokenDTO
+        in: body
+        name: refreshTokenDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.RefreshTokenDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.TokensView'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: client registration route
+      parameters:
+      - description: RegisterDTO
+        in: body
+        name: registerDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.RegisterDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.ClientView'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/validate.ValidationError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - auth
+  /auth/verify:
+    post:
+      consumes:
+      - application/json
+      description: forget password step 2 (verifies code from email)
+      parameters:
+      - description: CheckEmailVerificationDTO
+        in: body
+        name: checkDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CheckEmailVerificationDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CommonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/validate.ValidationError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - auth
+  /parking-place/:
+    get:
+      description: get all parking places
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/views.ParkingPlaceListView'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - parking place
+  /parking-place/{id}:
+    get:
+      description: get parking place detail
+      parameters:
+      - description: parking place id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.ParkingPlaceDetailView'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - parking place
+  /parking-place/by-parking-zone-id/{id}:
+    get:
+      description: get all parking places by parking zone id
+      parameters:
+      - description: parking zone id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/views.ParkingPlaceListView'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - parking place
+  /parking-zone/:
+    get:
+      description: get all parking zone
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/views.ParkingZoneView'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - parking zone
+  /parking-zone/{id}:
+    get:
+      description: get parking zone detail
+      parameters:
+      - description: parking zone id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.ParkingZoneView'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - parking zone
+  /personal/add-car:
+    post:
+      consumes:
+      - application/json
+      description: add car by client
+      parameters:
+      - description: PersonalCarCreateDTO
+        in: body
+        name: createDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.PersonalCarCreateDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.CarDetailView'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/validate.ValidationError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - personal
+  /personal/buy-ticket:
+    post:
+      consumes:
+      - application/json
+      description: buy ticket by client
+      parameters:
+      - description: BuyTicketDTO
+        in: body
+        name: buyTicketDTO
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.BuyTicketDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.TicketDetailView'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/validate.ValidationError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - personal
+  /personal/car-activate/{id}:
+    put:
+      description: activate car by client
+      parameters:
+      - description: car id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - personal
+  /personal/car-deactivate/{id}:
+    put:
+      description: deactivate car by client
+      parameters:
+      - description: car id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - personal
+  /personal/my-cars:
+    get:
+      description: get client cars
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/views.CarListView'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - personal
+  /personal/my-entry-history:
+    get:
+      description: get client entry histories
+      parameters:
+      - description: car id
+        in: query
+        name: car_id
+        type: integer
+      - description: 'selected period (ex: day, week, month, all)'
+        in: query
+        name: selected_period
+        type: string
+      - description: 'date from (ex: 2022-04-02T00:00:00.000Z)'
+        in: query
+        name: date_from
+        type: string
+      - description: 'date to (ex: 2022-04-02T00:00:00.000Z)'
+        in: query
+        name: date_to
+        type: string
+      - description: page
+        in: query
+        name: page
+        type: integer
+      - description: size
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/views.PersonalEntryHistoryListView'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - personal
+  /personal/my-tickets:
+    get:
+      description: get client tickets
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/views.PersonalTicketListView'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - personal
+  /tax/:
+    get:
+      description: get all taxes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/views.TaxView'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - tax
+  /tax/{id}:
+    get:
+      description: get tax detail
+      parameters:
+      - description: tax id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/views.TaxView'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      tags:
+      - tax
+  /upload-image:
+    post:
+      consumes:
+      - multipart/form-data
+      description: upload image
+      parameters:
+      - description: image
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.ImageResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
