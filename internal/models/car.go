@@ -26,7 +26,6 @@ func (c Car) ToView() views.CarDetailView {
 		Title:    c.Title,
 		Plate:    c.Plate,
 		IsActive: c.IsActive,
-		ClientID: c.ClientID,
 	}
 	if c.Client != nil {
 		view.Client = c.Client.ToView()

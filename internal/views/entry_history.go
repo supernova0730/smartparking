@@ -1,11 +1,9 @@
 package views
 
 type EntryHistoryDetailView struct {
-	ID            int64  `json:"id"`
-	Image         string `json:"image"`
-	Time          string `json:"time"`
-	CarID         int64  `json:"car_id"`
-	ParkingZoneID int64  `json:"parking_zone_id"`
+	ID    int64  `json:"id"`
+	Image string `json:"image"`
+	Time  string `json:"time"`
 
 	Car         CarDetailView   `json:"car"`
 	ParkingZone ParkingZoneView `json:"parking_zone"`

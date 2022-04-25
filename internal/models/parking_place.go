@@ -21,10 +21,9 @@ func (ParkingPlace) TableName() string {
 
 func (pp ParkingPlace) ToView() views.ParkingPlaceDetailView {
 	view := views.ParkingPlaceDetailView{
-		ID:            pp.ID,
-		Number:        pp.Number,
-		IsBusy:        pp.IsBusy,
-		ParkingZoneID: pp.ParkingZoneID,
+		ID:     pp.ID,
+		Number: pp.Number,
+		IsBusy: pp.IsBusy,
 	}
 	if pp.ParkingZone != nil {
 		view.ParkingZone = pp.ParkingZone.ToView()
@@ -34,12 +33,15 @@ func (pp ParkingPlace) ToView() views.ParkingPlaceDetailView {
 
 func (list ListParkingPlace) ToView() (result []views.ParkingPlaceListView) {
 	for _, parkingPlace := range list {
-		result = append(result, views.ParkingPlaceListView{
-			ID:            parkingPlace.ID,
-			Number:        parkingPlace.Number,
-			IsBusy:        parkingPlace.IsBusy,
-			ParkingZoneID: parkingPlace.ParkingZoneID,
-		})
+		view := views.ParkingPlaceListView{
+			ID:     parkingPlace.ID,
+			Number: parkingPlace.Number,
+			IsBusy: parkingPlace.IsBusy,
+		}
+		if parkingPlace.ParkingZone != nil {
+			view.ParkingZoneTitle = parkingPlace.ParkingZone.Title
+		}
+		result = append(result, view)
 	}
 	return
 }

@@ -24,11 +24,9 @@ func (EntryHistory) TableName() string {
 
 func (eh EntryHistory) ToView() views.EntryHistoryDetailView {
 	view := views.EntryHistoryDetailView{
-		ID:            eh.ID,
-		Image:         eh.Image,
-		Time:          eh.Time.Format(consts.CustomFormat),
-		CarID:         eh.CarID,
-		ParkingZoneID: eh.ParkingZoneID,
+		ID:    eh.ID,
+		Image: eh.Image,
+		Time:  eh.Time.Format(consts.CustomFormat),
 	}
 	if eh.Car != nil {
 		view.Car = eh.Car.ToView()

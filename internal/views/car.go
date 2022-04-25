@@ -5,7 +5,6 @@ type CarDetailView struct {
 	Title    string `json:"title"`
 	Plate    string `json:"plate"`
 	IsActive bool   `json:"is_active"`
-	ClientID int64  `json:"client_id"`
 
 	Client ClientView `json:"client"`
 }
