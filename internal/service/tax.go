@@ -32,7 +32,7 @@ func (s *taxService) GetByID(id int64) (result models.Tax, err error) {
 	return
 }
 
-func (s *taxService) GetAll() (result []models.Tax, err error) {
+func (s *taxService) GetAll() (result models.ListTax, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("taxService.GetAll", zap.Error(err))
@@ -42,7 +42,7 @@ func (s *taxService) GetAll() (result []models.Tax, err error) {
 	return s.m.Repository().Tax().GetAll()
 }
 
-func (s *taxService) GetAllOrderByPrice() (result []models.Tax, err error) {
+func (s *taxService) GetAllOrderByPrice() (result models.ListTax, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("taxService.GetAllOrderByPrice", zap.Error(err))

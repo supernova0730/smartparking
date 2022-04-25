@@ -23,7 +23,7 @@ func (ctl *TicketController) GetAll(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListTicket(tickets).ToView()
+	result := tickets.ToView()
 	return response.Success(c, result)
 }
 

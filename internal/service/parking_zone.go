@@ -32,7 +32,7 @@ func (s *parkingZoneService) GetByID(id int64) (result models.ParkingZone, err e
 	return
 }
 
-func (s *parkingZoneService) GetAll() (result []models.ParkingZone, err error) {
+func (s *parkingZoneService) GetAll() (result models.ListParkingZone, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("parkingZoneService.GetAll", zap.Error(err))

@@ -57,7 +57,7 @@ func (s *carService) GetByPlates(plates []string) (result models.Car, err error)
 	return s.m.Repository().Car().GetByPlates(plates)
 }
 
-func (s *carService) GetAll() (result []models.Car, err error) {
+func (s *carService) GetAll() (result models.ListCar, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("carService.GetAll", zap.Error(err))
@@ -67,7 +67,7 @@ func (s *carService) GetAll() (result []models.Car, err error) {
 	return s.m.Repository().Car().GetAll()
 }
 
-func (s *carService) GetAllByClientID(clientID int64) (result []models.Car, err error) {
+func (s *carService) GetAllByClientID(clientID int64) (result models.ListCar, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("carService.GetAllByClientID", zap.Error(err), zap.Int64("clientID", clientID))

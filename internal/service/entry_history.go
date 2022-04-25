@@ -47,7 +47,7 @@ func (s *entryHistoryService) GetByID(id int64) (result models.EntryHistory, err
 	return
 }
 
-func (s *entryHistoryService) GetAll() (result []models.EntryHistory, err error) {
+func (s *entryHistoryService) GetAll() (result models.ListEntryHistory, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("entryHistoryService.GetAll", zap.Error(err))
@@ -57,7 +57,7 @@ func (s *entryHistoryService) GetAll() (result []models.EntryHistory, err error)
 	return s.m.Repository().EntryHistory().GetAll()
 }
 
-func (s *entryHistoryService) GetAllBy(where models.EntryHistory) (result []models.EntryHistory, err error) {
+func (s *entryHistoryService) GetAllBy(where models.EntryHistory) (result models.ListEntryHistory, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("entryHistoryService.GetAllBy", zap.Error(err), zap.Any("where", where))
@@ -67,7 +67,7 @@ func (s *entryHistoryService) GetAllBy(where models.EntryHistory) (result []mode
 	return s.m.Repository().EntryHistory().GetAllBy(where)
 }
 
-func (s *entryHistoryService) GetAllByClientIDAndFilter(clientID int64, filter dtos.EntryHistoryFilter) (result []models.EntryHistory, err error) {
+func (s *entryHistoryService) GetAllByClientIDAndFilter(clientID int64, filter dtos.EntryHistoryFilter) (result models.ListEntryHistory, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("entryHistoryService.GetAllByClientID", zap.Error(err), zap.Int64("clientID", clientID))

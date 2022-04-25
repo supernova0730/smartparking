@@ -35,7 +35,7 @@ func (ctl *PersonalController) GetAllMyCars(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListCar(cars).ToView()
+	result := cars.ToView()
 	return response.Success(c, result)
 }
 
@@ -143,7 +143,7 @@ func (ctl *PersonalController) GetAllMyTickets(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListTicket(tickets).ToPersonalTicketListView()
+	result := tickets.ToPersonalTicketListView()
 	return response.Success(c, result)
 }
 
@@ -213,6 +213,6 @@ func (ctl *PersonalController) GetAllMyEntryHistories(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListEntryHistory(entryHistories).ToPersonalEntryHistoryView()
+	result := entryHistories.ToPersonalEntryHistoryView()
 	return response.Success(c, result)
 }

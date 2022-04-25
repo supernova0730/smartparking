@@ -23,7 +23,7 @@ func (ctl *CarController) GetAll(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListCar(cars).ToView()
+	result := cars.ToView()
 	return response.Success(c, result)
 }
 

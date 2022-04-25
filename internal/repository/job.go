@@ -26,7 +26,7 @@ func (repo *jobRepository) GetByCode(code string) (result models.Job, err error)
 	return
 }
 
-func (repo *jobRepository) GetAll() (result models.ListJob, err error) {
+func (repo *jobRepository) GetAll() (result []models.Job, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("jobRepository.GetAll failed", zap.Error(err))
@@ -37,7 +37,7 @@ func (repo *jobRepository) GetAll() (result models.ListJob, err error) {
 	return
 }
 
-func (repo *jobRepository) GetAllActive() (result models.ListJob, err error) {
+func (repo *jobRepository) GetAllActive() (result []models.Job, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("jobRepository.GetAllActive failed", zap.Error(err))

@@ -3,7 +3,6 @@ package controllers
 import (
 	"github.com/gofiber/fiber/v2"
 	"smartparking/internal/interfaces/manager"
-	"smartparking/internal/models"
 	"smartparking/internal/transport/response"
 )
 
@@ -21,7 +20,7 @@ func (ctl *EntryHistoryController) GetAll(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListEntryHistory(entryHistories).ToView()
+	result := entryHistories.ToView()
 	return response.Success(c, result)
 }
 

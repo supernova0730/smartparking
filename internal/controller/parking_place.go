@@ -30,7 +30,7 @@ func (ctl *ParkingPlaceController) GetAll(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListParkingPlace(parkingPlaces).ToView()
+	result := parkingPlaces.ToView()
 	return response.Success(c, result)
 }
 
@@ -54,7 +54,7 @@ func (ctl *ParkingPlaceController) GetAllByParkingZoneID(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListParkingPlace(parkingPlaces).ToView()
+	result := parkingPlaces.ToView()
 	return response.Success(c, result)
 }
 

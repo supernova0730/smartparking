@@ -24,7 +24,7 @@ func (ctl *ClientController) GetAll(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListClient(clients).ToView()
+	result := clients.ToView()
 	return response.Success(c, result)
 }
 

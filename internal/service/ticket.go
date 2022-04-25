@@ -67,7 +67,7 @@ func (s *ticketService) GetByParkingZoneClientIDs(parkingZoneID, clientID int64)
 	return
 }
 
-func (s *ticketService) GetAll() (result []models.Ticket, err error) {
+func (s *ticketService) GetAll() (result models.ListTicket, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("ticketService.GetAll", zap.Error(err))
@@ -77,7 +77,7 @@ func (s *ticketService) GetAll() (result []models.Ticket, err error) {
 	return s.m.Repository().Ticket().GetAll()
 }
 
-func (s *ticketService) GetAllBy(where models.Ticket) (result []models.Ticket, err error) {
+func (s *ticketService) GetAllBy(where models.Ticket) (result models.ListTicket, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("ticketService.GetAllBy failed", zap.Error(err), zap.Any("where", where))

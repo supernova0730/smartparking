@@ -60,7 +60,7 @@ func (s *clientService) GetByEmail(email string) (result models.Client, err erro
 	return
 }
 
-func (s *clientService) GetAll() (result []models.Client, err error) {
+func (s *clientService) GetAll() (result models.ListClient, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("clientService.GetAll", zap.Error(err))

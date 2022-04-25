@@ -30,7 +30,7 @@ func (ctl *ParkingZoneController) GetAll(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListParkingZone(parkingZones).ToView()
+	result := parkingZones.ToView()
 	return response.Success(c, result)
 }
 

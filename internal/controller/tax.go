@@ -53,7 +53,7 @@ func (ctl *TaxController) GetAll(c *fiber.Ctx) error {
 		return err
 	}
 
-	result := models.ListTax(taxes).ToView()
+	result := taxes.ToView()
 	return response.Success(c, result)
 }
 

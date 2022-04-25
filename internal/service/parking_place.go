@@ -32,7 +32,7 @@ func (s *parkingPlaceService) GetByID(id int64) (result models.ParkingPlace, err
 	return
 }
 
-func (s *parkingPlaceService) GetAll() (result []models.ParkingPlace, err error) {
+func (s *parkingPlaceService) GetAll() (result models.ListParkingPlace, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("parkingPlaceService.GetAll", zap.Error(err))
@@ -42,7 +42,7 @@ func (s *parkingPlaceService) GetAll() (result []models.ParkingPlace, err error)
 	return s.m.Repository().ParkingPlace().GetAll()
 }
 
-func (s *parkingPlaceService) GetAllBy(where models.ParkingPlace) (result []models.ParkingPlace, err error) {
+func (s *parkingPlaceService) GetAllBy(where models.ParkingPlace) (result models.ListParkingPlace, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("parkingPlaceService.GetAllBy failed", zap.Error(err), zap.Any("where", where))
