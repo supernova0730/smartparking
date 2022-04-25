@@ -1,8 +1,8 @@
 package views
 
 type TaxView struct {
-	ID       int64  `json:"id,omitempty"`
+	ID       string `json:"id,omitempty"`
 	Title    string `json:"title,omitempty"`
 	Duration string `json:"duration,omitempty"`
-	Price    int    `json:"price,omitempty"`
+	Price    string `json:"price,omitempty"`
 }

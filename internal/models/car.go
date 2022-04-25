@@ -3,6 +3,7 @@ package models
 import (
 	"smartparking/internal/dtos"
 	"smartparking/internal/views"
+	"smartparking/pkg/tools"
 )
 
 type ListCar []Car
@@ -22,7 +23,7 @@ func (Car) TableName() string {
 
 func (c Car) ToView() views.CarDetailView {
 	view := views.CarDetailView{
-		ID:       c.ID,
+		ID:       tools.Int64ToString(c.ID),
 		Title:    c.Title,
 		Plate:    c.Plate,
 		IsActive: c.IsActive,
@@ -36,11 +37,11 @@ func (c Car) ToView() views.CarDetailView {
 func (list ListCar) ToView() (result []views.CarListView) {
 	for _, car := range list {
 		result = append(result, views.CarListView{
-			ID:       car.ID,
+			ID:       tools.Int64ToString(car.ID),
 			Title:    car.Title,
 			Plate:    car.Plate,
 			IsActive: car.IsActive,
-			ClientID: car.ClientID,
+			ClientID: tools.Int64ToString(car.ClientID),
 		})
 	}
 	return

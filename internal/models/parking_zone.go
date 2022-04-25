@@ -3,6 +3,7 @@ package models
 import (
 	"smartparking/internal/dtos"
 	"smartparking/internal/views"
+	"smartparking/pkg/tools"
 )
 
 type ListParkingZone []ParkingZone
@@ -18,7 +19,7 @@ func (ParkingZone) TableName() string {
 
 func (pz ParkingZone) ToView() views.ParkingZoneView {
 	return views.ParkingZoneView{
-		ID:    pz.ID,
+		ID:    tools.Int64ToString(pz.ID),
 		Title: pz.Title,
 		Image: pz.Image,
 	}

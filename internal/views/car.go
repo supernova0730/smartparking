@@ -1,7 +1,7 @@
 package views
 
 type CarDetailView struct {
-	ID       int64  `json:"id,omitempty"`
+	ID       string `json:"id,omitempty"`
 	Title    string `json:"title,omitempty"`
 	Plate    string `json:"plate,omitempty"`
 	IsActive bool   `json:"is_active,omitempty"`
@@ -10,9 +10,9 @@ type CarDetailView struct {
 }
 
 type CarListView struct {
-	ID       int64  `json:"id,omitempty"`
+	ID       string `json:"id,omitempty"`
 	Title    string `json:"title,omitempty"`
 	Plate    string `json:"plate,omitempty"`
 	IsActive bool   `json:"is_active,omitempty"`
-	ClientID int64  `json:"client_id,omitempty"`
+	ClientID string `json:"client_id,omitempty"`
 }

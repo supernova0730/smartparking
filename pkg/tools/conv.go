@@ -18,6 +18,14 @@ func StringToInt64(s string) int64 {
 	return i
 }
 
+func Int64ToString(i int64) string {
+	return strconv.FormatInt(i, 10)
+}
+
+func IntToString(i int) string {
+	return strconv.Itoa(i)
+}
+
 func GetDatePeriod(selectedPeriod string, dateFrom, dateTo time.Time) (from, to time.Time) {
 	from, to = dateFrom, dateTo
 	if from.IsZero() && to.IsZero() {

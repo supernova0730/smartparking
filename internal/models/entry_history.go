@@ -3,6 +3,7 @@ package models
 import (
 	"smartparking/internal/consts"
 	"smartparking/internal/views"
+	"smartparking/pkg/tools"
 	"time"
 )
 
@@ -24,7 +25,7 @@ func (EntryHistory) TableName() string {
 
 func (eh EntryHistory) ToView() views.EntryHistoryDetailView {
 	view := views.EntryHistoryDetailView{
-		ID:    eh.ID,
+		ID:    tools.Int64ToString(eh.ID),
 		Image: eh.Image,
 		Time:  eh.Time.Format(consts.CustomFormat),
 	}
@@ -40,10 +41,10 @@ func (eh EntryHistory) ToView() views.EntryHistoryDetailView {
 func (list ListEntryHistory) ToView() (result []views.EntryHistoryListView) {
 	for _, eh := range list {
 		view := views.EntryHistoryListView{
-			ID:            eh.ID,
+			ID:            tools.Int64ToString(eh.ID),
 			Time:          eh.Time.Format(consts.CustomFormat),
-			CarID:         eh.CarID,
-			ParkingZoneID: eh.ParkingZoneID,
+			CarID:         tools.Int64ToString(eh.CarID),
+			ParkingZoneID: tools.Int64ToString(eh.ParkingZoneID),
 		}
 		if eh.Car != nil {
 			view.CarPlate = eh.Car.ToView().Plate
@@ -59,7 +60,7 @@ func (list ListEntryHistory) ToView() (result []views.EntryHistoryListView) {
 func (list ListEntryHistory) ToPersonalEntryHistoryView() (result []views.PersonalEntryHistoryListView) {
 	for _, eh := range list {
 		view := views.PersonalEntryHistoryListView{
-			ID:        eh.ID,
+			ID:        tools.Int64ToString(eh.ID),
 			EntryTime: eh.Time.Format(consts.CustomFormat),
 		}
 		if eh.Car != nil {

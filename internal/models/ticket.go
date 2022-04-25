@@ -4,6 +4,7 @@ import (
 	"smartparking/internal/consts"
 	"smartparking/internal/dtos"
 	"smartparking/internal/views"
+	"smartparking/pkg/tools"
 	"time"
 )
 
@@ -28,10 +29,10 @@ func (t Ticket) IsExpired() bool {
 
 func (t Ticket) ToView() views.TicketDetailView {
 	view := views.TicketDetailView{
-		ID:             t.ID,
+		ID:             tools.Int64ToString(t.ID),
 		ExpiresAt:      t.ExpiresAt.Format(consts.CustomFormat),
-		ClientID:       t.ClientID,
-		ParkingPlaceID: t.ParkingPlaceID,
+		ClientID:       tools.Int64ToString(t.ClientID),
+		ParkingPlaceID: tools.Int64ToString(t.ParkingPlaceID),
 	}
 	if t.Client != nil {
 		view.Client = t.Client.ToView()
@@ -45,10 +46,10 @@ func (t Ticket) ToView() views.TicketDetailView {
 func (list ListTicket) ToView() (result []views.TicketListView) {
 	for _, t := range list {
 		view := views.TicketListView{
-			ID:             t.ID,
+			ID:             tools.Int64ToString(t.ID),
 			ExpiresAt:      t.ExpiresAt.Format(consts.CustomFormat),
-			ClientID:       t.ClientID,
-			ParkingPlaceID: t.ParkingPlaceID,
+			ClientID:       tools.Int64ToString(t.ClientID),
+			ParkingPlaceID: tools.Int64ToString(t.ParkingPlaceID),
 		}
 		if t.Client != nil {
 			view.FirstName = t.Client.ToView().FirstName
@@ -68,7 +69,7 @@ func (list ListTicket) ToView() (result []views.TicketListView) {
 func (list ListTicket) ToPersonalTicketListView() (result []views.PersonalTicketListView) {
 	for _, t := range list {
 		view := views.PersonalTicketListView{
-			ID:      t.ID,
+			ID:      tools.Int64ToString(t.ID),
 			Expires: t.ExpiresAt.Format(consts.CustomFormat),
 		}
 		if t.ParkingPlace != nil {

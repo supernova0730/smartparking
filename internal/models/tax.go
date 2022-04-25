@@ -21,10 +21,10 @@ func (Tax) TableName() string {
 
 func (t Tax) ToView() views.TaxView {
 	return views.TaxView{
-		ID:       t.ID,
+		ID:       tools.Int64ToString(t.ID),
 		Title:    t.Title,
 		Duration: tools.DurationToString(t.Duration),
-		Price:    t.Price,
+		Price:    tools.IntToString(t.Price),
 	}
 }
 

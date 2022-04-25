@@ -3,6 +3,7 @@ package models
 import (
 	"smartparking/internal/dtos"
 	"smartparking/internal/views"
+	"smartparking/pkg/tools"
 	"time"
 )
 
@@ -25,12 +26,12 @@ func (Client) TableName() string {
 
 func (c Client) ToView() views.ClientView {
 	return views.ClientView{
-		ID:           c.ID,
+		ID:           tools.Int64ToString(c.ID),
 		FirstName:    c.FirstName,
 		LastName:     c.LastName,
 		Email:        c.Email,
 		Phone:        c.Phone,
-		NumberOfCars: c.NumberOfCars,
+		NumberOfCars: tools.IntToString(c.NumberOfCars),
 		CreatedAt:    c.CreatedAt.Format(time.RFC3339),
 		UpdatedAt:    c.UpdatedAt.Format(time.RFC3339),
 	}
