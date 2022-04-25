@@ -35,9 +35,10 @@ func (pp ParkingPlace) ToView() views.ParkingPlaceDetailView {
 func (list ListParkingPlace) ToView() (result []views.ParkingPlaceListView) {
 	for _, parkingPlace := range list {
 		view := views.ParkingPlaceListView{
-			ID:     tools.Int64ToString(parkingPlace.ID),
-			Number: parkingPlace.Number,
-			IsBusy: parkingPlace.IsBusy,
+			ID:            tools.Int64ToString(parkingPlace.ID),
+			Number:        parkingPlace.Number,
+			IsBusy:        parkingPlace.IsBusy,
+			ParkingZoneID: tools.Int64ToString(parkingPlace.ParkingZoneID),
 		}
 		if parkingPlace.ParkingZone != nil {
 			view.ParkingZoneTitle = parkingPlace.ParkingZone.Title

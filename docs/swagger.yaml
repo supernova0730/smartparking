@@ -103,10 +103,8 @@ definitions:
     properties:
       client:
         $ref: '#/definitions/views.ClientView'
-      client_id:
-        type: integer
       id:
-        type: integer
+        type: string
       is_active:
         type: boolean
       plate:
@@ -116,10 +114,12 @@ definitions:
     type: object
   views.CarListView:
     properties:
+      client_full_name:
+        type: string
       client_id:
-        type: integer
+        type: string
       id:
-        type: integer
+        type: string
       is_active:
         type: boolean
       plate:
@@ -136,11 +136,11 @@ definitions:
       first_name:
         type: string
       id:
-        type: integer
+        type: string
       last_name:
         type: string
       number_of_cars:
-        type: integer
+        type: string
       phone:
         type: string
       updated_at:
@@ -149,31 +149,31 @@ definitions:
   views.ParkingPlaceDetailView:
     properties:
       id:
-        type: integer
+        type: string
       is_busy:
         type: boolean
       number:
         type: string
       parking_zone:
         $ref: '#/definitions/views.ParkingZoneView'
-      parking_zone_id:
-        type: integer
     type: object
   views.ParkingPlaceListView:
     properties:
       id:
-        type: integer
+        type: string
       is_busy:
         type: boolean
       number:
         type: string
       parking_zone_id:
-        type: integer
+        type: string
+      parking_zone_title:
+        type: string
     type: object
   views.ParkingZoneView:
     properties:
       id:
-        type: integer
+        type: string
       image:
         type: string
       title:
@@ -188,7 +188,7 @@ definitions:
       entry_time:
         type: string
       id:
-        type: integer
+        type: string
       parking_zone_title:
         type: string
     type: object
@@ -197,7 +197,7 @@ definitions:
       expires:
         type: string
       id:
-        type: integer
+        type: string
       parking_number:
         type: string
       parking_zone_image:
@@ -210,9 +210,9 @@ definitions:
       duration:
         type: string
       id:
-        type: integer
+        type: string
       price:
-        type: integer
+        type: string
       title:
         type: string
     type: object
@@ -221,15 +221,15 @@ definitions:
       client:
         $ref: '#/definitions/views.ClientView'
       client_id:
-        type: integer
+        type: string
       expires_at:
         type: string
       id:
-        type: integer
+        type: string
       parking_place:
         $ref: '#/definitions/views.ParkingPlaceDetailView'
       parking_place_id:
-        type: integer
+        type: string
     type: object
   views.TokensView:
     properties:

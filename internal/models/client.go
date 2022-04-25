@@ -24,6 +24,10 @@ func (Client) TableName() string {
 	return "client"
 }
 
+func (c Client) GetFullName() string {
+	return c.FirstName + " " + c.LastName
+}
+
 func (c Client) ToView() views.ClientView {
 	return views.ClientView{
 		ID:           tools.Int64ToString(c.ID),

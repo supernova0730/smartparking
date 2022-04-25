@@ -13,12 +13,12 @@ type TicketDetailView struct {
 type TicketListView struct {
 	ID               string `json:"id,omitempty"`
 	ExpiresAt        string `json:"expires_at,omitempty"`
-	ClientID         string `json:"client_id,omitempty"`
-	ParkingPlaceID   string `json:"parking_place_id,omitempty"`
-	FirstName        string `json:"first_name,omitempty"`
-	LastName         string `json:"last_name,omitempty"`
+	ClientFullName   string `json:"client_full_name,omitempty"`
 	ParkingNumber    string `json:"parking_number,omitempty"`
 	ParkingZoneTitle string `json:"parking_zone_title,omitempty"`
+	ClientID         string `json:"client_id,omitempty"`
+	ParkingPlaceID   string `json:"parking_place_id,omitempty"`
+	ParkingZoneID    string `json:"parking_zone_id,omitempty"`
 }
 
 type PersonalTicketListView struct {

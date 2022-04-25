@@ -12,10 +12,10 @@ type EntryHistoryDetailView struct {
 type EntryHistoryListView struct {
 	ID               string `json:"id,omitempty"`
 	Time             string `json:"time,omitempty"`
-	CarID            string `json:"car_id,omitempty"`
-	ParkingZoneID    string `json:"parking_zone_id,omitempty"`
 	CarPlate         string `json:"car_plate,omitempty"`
 	ParkingZoneTitle string `json:"parking_zone_title,omitempty"`
+	CarID            string `json:"car_id,omitempty"`
+	ParkingZoneID    string `json:"parking_zone_id,omitempty"`
 }
 
 type PersonalEntryHistoryListView struct {

@@ -52,13 +52,13 @@ func (list ListTicket) ToView() (result []views.TicketListView) {
 			ParkingPlaceID: tools.Int64ToString(t.ParkingPlaceID),
 		}
 		if t.Client != nil {
-			view.FirstName = t.Client.ToView().FirstName
-			view.LastName = t.Client.ToView().LastName
+			view.ClientFullName = t.Client.GetFullName()
 		}
 		if t.ParkingPlace != nil {
 			view.ParkingNumber = t.ParkingPlace.ToView().Number
 			if t.ParkingPlace.ParkingZone != nil {
 				view.ParkingZoneTitle = t.ParkingPlace.ParkingZone.ToView().Title
+				view.ParkingZoneID = tools.Int64ToString(t.ParkingPlace.ParkingZone.ID)
 			}
 		}
 		result = append(result, view)

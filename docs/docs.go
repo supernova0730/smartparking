@@ -979,11 +979,8 @@ const docTemplate = `{
                 "client": {
                     "$ref": "#/definitions/views.ClientView"
                 },
-                "client_id": {
-                    "type": "integer"
-                },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "is_active": {
                     "type": "boolean"
@@ -999,11 +996,14 @@ const docTemplate = `{
         "views.CarListView": {
             "type": "object",
             "properties": {
+                "client_full_name": {
+                    "type": "string"
+                },
                 "client_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "is_active": {
                     "type": "boolean"
@@ -1029,13 +1029,13 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "last_name": {
                     "type": "string"
                 },
                 "number_of_cars": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "phone": {
                     "type": "string"
@@ -1049,7 +1049,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "is_busy": {
                     "type": "boolean"
@@ -1059,9 +1059,6 @@ const docTemplate = `{
                 },
                 "parking_zone": {
                     "$ref": "#/definitions/views.ParkingZoneView"
-                },
-                "parking_zone_id": {
-                    "type": "integer"
                 }
             }
         },
@@ -1069,7 +1066,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "is_busy": {
                     "type": "boolean"
@@ -1078,7 +1075,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "parking_zone_id": {
-                    "type": "integer"
+                    "type": "string"
+                },
+                "parking_zone_title": {
+                    "type": "string"
                 }
             }
         },
@@ -1086,7 +1086,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "image": {
                     "type": "string"
@@ -1109,7 +1109,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "parking_zone_title": {
                     "type": "string"
@@ -1123,7 +1123,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "parking_number": {
                     "type": "string"
@@ -1143,10 +1143,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "price": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "title": {
                     "type": "string"
@@ -1160,19 +1160,19 @@ const docTemplate = `{
                     "$ref": "#/definitions/views.ClientView"
                 },
                 "client_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "expires_at": {
                     "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "parking_place": {
                     "$ref": "#/definitions/views.ParkingPlaceDetailView"
                 },
                 "parking_place_id": {
-                    "type": "integer"
+                    "type": "string"
                 }
             }
         },

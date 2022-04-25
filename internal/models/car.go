@@ -36,13 +36,17 @@ func (c Car) ToView() views.CarDetailView {
 
 func (list ListCar) ToView() (result []views.CarListView) {
 	for _, car := range list {
-		result = append(result, views.CarListView{
+		view := views.CarListView{
 			ID:       tools.Int64ToString(car.ID),
 			Title:    car.Title,
 			Plate:    car.Plate,
 			IsActive: car.IsActive,
 			ClientID: tools.Int64ToString(car.ClientID),
-		})
+		}
+		if car.Client != nil {
+			view.ClientFullName = car.Client.GetFullName()
+		}
+		result = append(result, view)
 	}
 	return
 }
