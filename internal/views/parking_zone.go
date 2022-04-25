@@ -1,7 +1,7 @@
 package views
 
 type ParkingZoneView struct {
-	ID    int64  `json:"id"`
-	Title string `json:"title"`
-	Image string `json:"image"`
+	ID    int64  `json:"id,omitempty"`
+	Title string `json:"title,omitempty"`
+	Image string `json:"image,omitempty"`
 }
