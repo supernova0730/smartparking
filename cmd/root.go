@@ -10,21 +10,24 @@ import (
 	"smartparking/pkg/tools"
 )
 
-var (
-	configPath string = tools.FilepathFromHome(".smartparking/config.yml")
-	rootCmd           = &cobra.Command{
-		Use:   "smartparking",
-		Short: "smartparking applications",
-	}
-)
+var rootCmd = &cobra.Command{
+	Use:   "smartparking",
+	Short: "smartparking applications",
+}
 
 func init() {
 	rootCmd.AddCommand(
 		startCmd,
 		migrateCmd,
+		configCmd,
 	)
 
-	rootCmd.PersistentFlags().StringVar(&configPath, "config", configPath, "path to config file")
+	rootCmd.PersistentFlags().StringVar(
+		&config.GlobalConfig.ConfigPath,
+		"config",
+		tools.FilepathFromHome(".smartparking/config.yml"),
+		"path to config file",
+	)
 }
 
 func Execute() {
@@ -34,6 +37,7 @@ func Execute() {
 }
 
 func loadConfig(cmd *cobra.Command, args []string) {
+	configPath := config.GlobalConfig.ConfigPath
 	err := config.Init(configPath)
 	if err != nil {
 		logger.Log.Fatal("can't initialize config", zap.Error(err))

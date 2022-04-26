@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
 	"github.com/spf13/viper"
+	"gopkg.in/yaml.v3"
 	"gorm.io/gorm"
+	"path/filepath"
+	"smartparking/pkg/tools"
 	"time"
 )
 
@@ -21,6 +24,7 @@ type Config struct {
 	JWT        JWT        `mapstructure:"jwt"`
 	Email      Email      `mapstructure:"email"`
 	Recognizer Recognizer `mapstructure:"recognizer"`
+	ConfigPath string     `mapstructure:"config_path"`
 	HashSalt   string     `mapstructure:"hash_salt"`
 }
 
@@ -81,6 +85,24 @@ func Init(configPath string) error {
 
 	err = viper.Unmarshal(&GlobalConfig)
 	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// SaveConfig - saves config from struct to file
+func SaveConfig(path string) error {
+	if err := tools.CreateDir(filepath.Dir(path)); err != nil {
+		return err
+	}
+
+	data, err := yaml.Marshal(GlobalConfig)
+	if err != nil {
+		return err
+	}
+
+	if err = tools.CreateFileAndWrite(path, data); err != nil {
 		return err
 	}
 

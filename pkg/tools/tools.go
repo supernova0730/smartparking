@@ -57,3 +57,26 @@ func SliceToUpper(s []string) []string {
 	}
 	return s
 }
+
+func CreateDir(path string) error {
+	_, err := os.Stat(path)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return os.Mkdir(path, 0775)
+		}
+		return err
+	}
+
+	return nil
+}
+
+func CreateFileAndWrite(path string, data []byte) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = io.Copy(file, bytes.NewReader(data))
+	return err
+}
