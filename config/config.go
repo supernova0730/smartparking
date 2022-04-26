@@ -3,9 +3,9 @@ package config
 import (
 	"fmt"
 	"github.com/bradfitz/gomemcache/memcache"
-	"github.com/spf13/viper"
 	"gopkg.in/yaml.v3"
 	"gorm.io/gorm"
+	"io/ioutil"
 	"path/filepath"
 	"smartparking/pkg/tools"
 	"time"
@@ -18,56 +18,56 @@ var (
 )
 
 type Config struct {
-	DB         DB         `mapstructure:"db" yaml:"db"`
-	Cache      Cache      `mapstructure:"cache" yaml:"cache"`
-	Web        Web        `mapstructure:"web" yaml:"web"`
-	JWT        JWT        `mapstructure:"jwt" yaml:"jwt"`
-	Email      Email      `mapstructure:"email" yaml:"email"`
-	Recognizer Recognizer `mapstructure:"recognizer" yaml:"recognizer"`
-	ConfigPath string     `mapstructure:"config_path" yaml:"config_path"`
-	HashSalt   string     `mapstructure:"hash_salt" yaml:"hash_salt"`
+	DB         DB         `yaml:"db"`
+	Cache      Cache      `yaml:"cache"`
+	Web        Web        `yaml:"web"`
+	JWT        JWT        `yaml:"jwt"`
+	Email      Email      `yaml:"email"`
+	Recognizer Recognizer `yaml:"recognizer"`
+	ConfigPath string     `yaml:"config_path"`
+	HashSalt   string     `yaml:"hash_salt"`
 }
 
 type DB struct {
-	Host     string `mapstructure:"host" yaml:"host"`
-	Port     string `mapstructure:"port" yaml:"port"`
-	Name     string `mapstructure:"name" yaml:"name"`
-	Username string `mapstructure:"username" yaml:"username"`
-	Password string `mapstructure:"password" yaml:"password"`
-	SSLMode  string `mapstructure:"sslmode" yaml:"sslmode"`
+	Host     string `yaml:"host"`
+	Port     string `yaml:"port"`
+	Name     string `yaml:"name"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
+	SSLMode  string `yaml:"sslmode"`
 }
 
 type Cache struct {
-	Host string        `mapstructure:"host" yaml:"host"`
-	Port string        `mapstructure:"port" yaml:"port"`
-	TTL  time.Duration `mapstructure:"ttl" yaml:"ttl"`
+	Host string        `yaml:"host"`
+	Port string        `yaml:"port"`
+	TTL  time.Duration `yaml:"ttl"`
 }
 
 type Web struct {
-	Host        string `mapstructure:"host" yaml:"host"`
-	Port        string `mapstructure:"port" yaml:"port"`
-	TLSEnable   bool   `mapstructure:"tlsenable" yaml:"tlsenable"`
-	CertFile    string `mapstructure:"certfile" yaml:"certfile"`
-	KeyFile     string `mapstructure:"keyfile" yaml:"keyfile"`
-	FileStorage string `mapstructure:"file_storage" yaml:"file_storage"`
+	Host        string `yaml:"host"`
+	Port        string `yaml:"port"`
+	TLSEnable   bool   `yaml:"tlsenable"`
+	CertFile    string `yaml:"certfile"`
+	KeyFile     string `yaml:"keyfile"`
+	FileStorage string `yaml:"file_storage"`
 }
 
 type JWT struct {
-	SecretKey       string        `mapstructure:"secret" yaml:"secret"`
-	AccessTokenTTL  time.Duration `mapstructure:"access_token_ttl" yaml:"access_token_ttl"`
-	RefreshTokenTTL time.Duration `mapstructure:"refresh_token_ttl" yaml:"refresh_token_ttl"`
+	SecretKey       string        `yaml:"secret"`
+	AccessTokenTTL  time.Duration `yaml:"access_token_ttl"`
+	RefreshTokenTTL time.Duration `yaml:"refresh_token_ttl"`
 }
 
 type Email struct {
-	Sender   string `mapstructure:"sender" yaml:"sender"`
-	Password string `mapstructure:"password" yaml:"password"`
-	SMTPHost string `mapstructure:"smtp_host" yaml:"smtp_host"`
-	SMTPPort string `mapstructure:"smtp_port" yaml:"smtp_port"`
+	Sender   string `yaml:"sender"`
+	Password string `yaml:"password"`
+	SMTPHost string `yaml:"smtp_host"`
+	SMTPPort string `yaml:"smtp_port"`
 }
 
 type Recognizer struct {
-	URL   string `mapstructure:"url" yaml:"url"`
-	Token string `mapstructure:"token" yaml:"token"`
+	URL   string `yaml:"url"`
+	Token string `yaml:"token"`
 }
 
 func (w Web) String() string {
@@ -76,19 +76,12 @@ func (w Web) String() string {
 
 // Init - reading config from file
 func Init(configPath string) error {
-	viper.SetConfigFile(configPath)
-
-	err := viper.ReadInConfig()
+	data, err := ioutil.ReadFile(configPath)
 	if err != nil {
 		return err
 	}
 
-	err = viper.Unmarshal(&GlobalConfig)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return yaml.Unmarshal(data, &GlobalConfig)
 }
 
 // SaveConfig - saves config from struct to file

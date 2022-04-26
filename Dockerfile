@@ -18,7 +18,6 @@ FROM gcr.io/distroless/base-debian10
 
 WORKDIR /root/
 COPY --from=build /root/go/bin/smartparking smartparking
-COPY config.yml .
 
 EXPOSE 8080
 CMD [ "/root/smartparking", "start", "--config=config.yml" ]

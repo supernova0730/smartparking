@@ -7,7 +7,6 @@ import (
 	"smartparking/pkg/cache"
 	"smartparking/pkg/database"
 	"smartparking/pkg/logger"
-	"smartparking/pkg/tools"
 )
 
 var rootCmd = &cobra.Command{
@@ -22,12 +21,7 @@ func init() {
 		configCmd,
 	)
 
-	rootCmd.PersistentFlags().StringVar(
-		&config.GlobalConfig.ConfigPath,
-		"config",
-		tools.FilepathFromHome(".smartparking/config.yml"),
-		"path to config file",
-	)
+	rootCmd.PersistentFlags().StringVar(&config.GlobalConfig.ConfigPath, "config", ConfigPath, "path to config file")
 }
 
 func Execute() {

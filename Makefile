@@ -4,10 +4,13 @@ export BIN_NAME=smartparking
 build:
 	GOOS=linux GOARCH=amd64 go build -o $(BIN_DIR)/$(BIN_NAME)
 
-run: build
+config: build
+	$(BIN_DIR)/$(BIN_NAME) config
+
+run: config
 	$(BIN_DIR)/$(BIN_NAME) start
 
-migrate: build
+migrate: config
 	$(BIN_DIR)/$(BIN_NAME) migrate
 
 deploy: build
