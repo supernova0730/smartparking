@@ -1,4 +1,4 @@
-export BIN_DIR=./cmd/bin
+export BIN_DIR=.
 export BIN_NAME=smartparking
 
 build:
