@@ -3,6 +3,7 @@ package middlewares
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/basicauth"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"smartparking/internal/apiError"
@@ -15,6 +16,7 @@ import (
 func RegisterMiddlewares(r fiber.Router) {
 	r.Use(recover.New())
 	r.Use(logger.New())
+	r.Use(cors.New())
 	r.Use(SetupContextHolder())
 	r.Use(Errors())
 }
