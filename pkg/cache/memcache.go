@@ -4,7 +4,7 @@ import (
 	"github.com/bradfitz/gomemcache/memcache"
 )
 
-func Init(host, port string) (*memcache.Client, error) {
+func Conn(host, port string) (*memcache.Client, error) {
 	address := host + ":" + port
 	mc := memcache.New(address)
 	if err := mc.Ping(); err != nil {

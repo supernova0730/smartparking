@@ -39,7 +39,7 @@ func loadConfig(cmd *cobra.Command, args []string) {
 
 	logger.Log.Info("root.loadConfig", zap.String("config path", configPath), zap.Any("config", config.GlobalConfig))
 
-	db, err := database.Init(database.Config{
+	db, err := database.Conn(database.Config{
 		Host:     config.GlobalConfig.DB.Host,
 		Port:     config.GlobalConfig.DB.Port,
 		Name:     config.GlobalConfig.DB.Name,
@@ -53,7 +53,7 @@ func loadConfig(cmd *cobra.Command, args []string) {
 
 	mcHost := config.GlobalConfig.Cache.Host
 	mcPort := config.GlobalConfig.Cache.Port
-	mc, err := cache.Init(mcHost, mcPort)
+	mc, err := cache.Conn(mcHost, mcPort)
 	if err != nil {
 		logger.Log.Fatal("can't initialize cache connection", zap.Error(err))
 	}

@@ -7,7 +7,7 @@ import (
 	"smartparking/pkg/logger"
 )
 
-func Init(conf Config) (*gorm.DB, error) {
+func Conn(conf Config) (*gorm.DB, error) {
 	dsn := conf.makeDSN()
 	gormDialector := postgres.New(postgres.Config{DSN: dsn})
 	gormConfig := &gorm.Config{
