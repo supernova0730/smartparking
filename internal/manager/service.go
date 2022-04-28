@@ -44,6 +44,8 @@ func (sm *serviceImpl) Auth() service.Auth {
 					SMTPHost: config.GlobalConfig.Email.SMTPHost,
 					SMTPPort: config.GlobalConfig.Email.SMTPPort,
 				}),
+				config.GlobalConfig.JWT.AccessTokenTTL,
+				config.GlobalConfig.JWT.RefreshTokenTTL,
 			)
 		}
 	})

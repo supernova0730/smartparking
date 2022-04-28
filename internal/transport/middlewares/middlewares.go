@@ -55,12 +55,12 @@ func AuthByToken(m manager.Manager) fiber.Handler {
 			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 
-		clientID, err := m.Service().Auth().ValidateToken(token)
+		claims, err := m.Service().Auth().ValidateToken(token)
 		if err != nil {
 			return c.SendStatus(fiber.StatusUnauthorized)
 		}
 
-		utils.SetAttributeInt64(c.Context(), utils.AttributeClientID, clientID)
+		utils.SetAttributeInt64(c.Context(), utils.AttributeClientID, claims.GetSubject())
 		return c.Next()
 	}
 }

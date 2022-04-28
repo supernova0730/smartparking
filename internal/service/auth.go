@@ -6,7 +6,6 @@ import (
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"math/rand"
-	"smartparking/config"
 	"smartparking/internal/apiError"
 	"smartparking/internal/interfaces/manager"
 	"smartparking/internal/models"
@@ -18,18 +17,22 @@ import (
 )
 
 type authService struct {
-	m            manager.Manager
-	tokenManager jwt.TokenManager
-	hashManager  hash.Manager
-	emailManager email.Manager
+	m               manager.Manager
+	tokenManager    jwt.TokenManager
+	hashManager     hash.Manager
+	emailManager    email.Manager
+	accessTokenTTL  time.Duration
+	refreshTokenTTL time.Duration
 }
 
-func NewAuthService(m manager.Manager, tokenManager jwt.TokenManager, hashManager hash.Manager, emailManager email.Manager) *authService {
+func NewAuthService(m manager.Manager, tokenManager jwt.TokenManager, hashManager hash.Manager, emailManager email.Manager, accessTokenTTL, refreshTokenTTL time.Duration) *authService {
 	return &authService{
-		m:            m,
-		tokenManager: tokenManager,
-		hashManager:  hashManager,
-		emailManager: emailManager,
+		m:               m,
+		tokenManager:    tokenManager,
+		hashManager:     hashManager,
+		emailManager:    emailManager,
+		accessTokenTTL:  accessTokenTTL,
+		refreshTokenTTL: refreshTokenTTL,
 	}
 }
 
@@ -74,7 +77,7 @@ func (s *authService) SignIn(client models.Client) (tokens models.Tokens, err er
 	return s.createSession(result.ID)
 }
 
-func (s *authService) ValidateToken(token string) (clientID int64, err error) {
+func (s *authService) ValidateToken(token string) (claims *jwt.Claims, err error) {
 	return s.tokenManager.Parse(token)
 }
 
@@ -89,7 +92,8 @@ func (s *authService) RefreshTokens(refreshToken string) (tokens models.Tokens, 
 		return
 	}
 
-	newAccessToken, err := s.tokenManager.NewJWT(session.ClientID, config.GlobalConfig.JWT.AccessTokenTTL)
+	claims := s.newClaims(session.ClientID, s.accessTokenTTL)
+	newAccessToken, err := s.tokenManager.NewJWT(claims)
 	if err != nil {
 		return
 	}
@@ -102,7 +106,8 @@ func (s *authService) RefreshTokens(refreshToken string) (tokens models.Tokens, 
 }
 
 func (s *authService) createSession(clientID int64) (models.Tokens, error) {
-	accessToken, err := s.tokenManager.NewJWT(clientID, config.GlobalConfig.JWT.AccessTokenTTL)
+	claims := s.newClaims(clientID, s.accessTokenTTL)
+	accessToken, err := s.tokenManager.NewJWT(claims)
 	if err != nil {
 		return models.Tokens{}, err
 	}
@@ -115,7 +120,7 @@ func (s *authService) createSession(clientID int64) (models.Tokens, error) {
 	session := models.Session{
 		ClientID:     clientID,
 		RefreshToken: refreshToken,
-		ExpiresAt:    time.Now().Add(config.GlobalConfig.JWT.RefreshTokenTTL),
+		ExpiresAt:    time.Now().Add(s.refreshTokenTTL),
 	}
 
 	_, err = s.m.Repository().Session().Create(session)
@@ -226,4 +231,11 @@ func (s *authService) checkAlreadyExistenceByEmailAndPhone(client models.Client)
 	}
 
 	return nil
+}
+
+func (s *authService) newClaims(clientID int64, ttl time.Duration) *jwt.Claims {
+	claims := &jwt.Claims{}
+	claims.SetSubject(clientID)
+	claims.SetExpiresAt(ttl)
+	return claims
 }
