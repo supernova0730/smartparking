@@ -73,8 +73,8 @@ func (w Web) String() string {
 	return fmt.Sprintf("%s:%s", w.Host, w.Port)
 }
 
-// Init - reading config from file
-func Init(configPath string) error {
+// Load - reading config from file
+func Load(configPath string) error {
 	data, err := ioutil.ReadFile(configPath)
 	if err != nil {
 		return err

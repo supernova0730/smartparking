@@ -32,7 +32,7 @@ func Execute() {
 
 func loadConfig(cmd *cobra.Command, args []string) {
 	configPath := config.GlobalConfig.ConfigPath
-	err := config.Init(configPath)
+	err := config.Load(configPath)
 	if err != nil {
 		logger.Log.Fatal("can't initialize config", zap.Error(err))
 	}
