@@ -25,7 +25,6 @@ type Config struct {
 	Email      Email      `yaml:"email"`
 	Recognizer Recognizer `yaml:"recognizer"`
 	ConfigPath string     `yaml:"config_path"`
-	HashSalt   string     `yaml:"hash_salt"`
 }
 
 type DB struct {

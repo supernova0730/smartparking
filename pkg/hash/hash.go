@@ -1,45 +1,29 @@
 package hash
 
 import (
-	"crypto/sha256"
-	"fmt"
+	"golang.org/x/crypto/bcrypt"
 )
 
-type HashManager interface {
+type Manager interface {
 	HashPassword(password string) (string, error)
 	CheckPasswordHash(password, hash string) bool
 }
 
-type SHA256Hasher struct {
-	salt string
+type manager struct{}
+
+func NewManager() *manager {
+	return &manager{}
 }
 
-func NewManager(salt string) *SHA256Hasher {
-	return &SHA256Hasher{salt: salt}
-}
-
-func (h *SHA256Hasher) HashPassword(password string) (string, error) {
-	hash := sha256.New()
-
-	_, err := hash.Write([]byte(password))
+func (h *manager) HashPassword(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return "", err
 	}
-
-	_, err = hash.Write([]byte(h.salt))
-	if err != nil {
-		return "", err
-	}
-
-	result := fmt.Sprintf("%x", hash.Sum(nil))
-	return result, nil
+	return string(hash), nil
 }
 
-func (h *SHA256Hasher) CheckPasswordHash(password, hash string) bool {
-	hashedPassword, err := h.HashPassword(password)
-	if err != nil {
-		return false
-	}
-
-	return hashedPassword == hash
+func (h *manager) CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }

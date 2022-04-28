@@ -20,11 +20,11 @@ import (
 type authService struct {
 	m            manager.Manager
 	tokenManager jwt.TokenManager
-	hashManager  hash.HashManager
+	hashManager  hash.Manager
 	emailManager toolsEmail.EmailManager
 }
 
-func NewAuthService(m manager.Manager, tokenManager jwt.TokenManager, hashManager hash.HashManager, emailManager toolsEmail.EmailManager) *authService {
+func NewAuthService(m manager.Manager, tokenManager jwt.TokenManager, hashManager hash.Manager, emailManager toolsEmail.EmailManager) *authService {
 	return &authService{
 		m:            m,
 		tokenManager: tokenManager,

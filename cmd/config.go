@@ -74,6 +74,4 @@ func init() {
 
 	confCmd.StringVar(&config.GlobalConfig.Recognizer.URL, "recognizer_url", "https://api.platerecognizer.com", "recognizer url")
 	confCmd.StringVar(&config.GlobalConfig.Recognizer.Token, "recognizer_token", "f548497ecd62d281f5ee97e497dd67426bb8a586", "recognizer token")
-
-	confCmd.StringVar(&config.GlobalConfig.HashSalt, "hash_salt", "my_hash_salt", "hash salt")
 }

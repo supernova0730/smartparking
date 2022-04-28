@@ -37,7 +37,7 @@ func (sm *serviceImpl) Auth() service.Auth {
 			sm.authService = service2.NewAuthService(
 				MManager,
 				jwt.NewManager(config.GlobalConfig.JWT.SecretKey),
-				hash.NewManager(config.GlobalConfig.HashSalt),
+				hash.NewManager(),
 				toolsEmail.NewManager(toolsEmail.Config{
 					Sender:   config.GlobalConfig.Email.Sender,
 					Password: config.GlobalConfig.Email.Password,
