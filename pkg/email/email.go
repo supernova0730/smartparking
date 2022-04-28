@@ -4,6 +4,13 @@ import (
 	"net/smtp"
 )
 
+type Config struct {
+	Sender   string
+	Password string
+	SMTPHost string
+	SMTPPort string
+}
+
 type Manager interface {
 	Send(to, message string) error
 }
