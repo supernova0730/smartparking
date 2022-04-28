@@ -10,7 +10,7 @@ import (
 	"smartparking/internal/apiError"
 	"smartparking/internal/interfaces/manager"
 	"smartparking/internal/models"
-	toolsEmail "smartparking/pkg/email"
+	"smartparking/pkg/email"
 	"smartparking/pkg/hash"
 	"smartparking/pkg/jwt"
 	"smartparking/pkg/logger"
@@ -21,10 +21,10 @@ type authService struct {
 	m            manager.Manager
 	tokenManager jwt.TokenManager
 	hashManager  hash.Manager
-	emailManager toolsEmail.EmailManager
+	emailManager email.Manager
 }
 
-func NewAuthService(m manager.Manager, tokenManager jwt.TokenManager, hashManager hash.Manager, emailManager toolsEmail.EmailManager) *authService {
+func NewAuthService(m manager.Manager, tokenManager jwt.TokenManager, hashManager hash.Manager, emailManager email.Manager) *authService {
 	return &authService{
 		m:            m,
 		tokenManager: tokenManager,

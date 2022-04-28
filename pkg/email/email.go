@@ -4,7 +4,7 @@ import (
 	"net/smtp"
 )
 
-type EmailManager interface {
+type Manager interface {
 	Send(to, message string) error
 }
 

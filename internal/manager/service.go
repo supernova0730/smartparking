@@ -4,7 +4,7 @@ import (
 	"smartparking/config"
 	"smartparking/internal/interfaces/service"
 	service2 "smartparking/internal/service"
-	toolsEmail "smartparking/pkg/email"
+	"smartparking/pkg/email"
 	"smartparking/pkg/hash"
 	"smartparking/pkg/jwt"
 	"sync"
@@ -38,7 +38,7 @@ func (sm *serviceImpl) Auth() service.Auth {
 				MManager,
 				jwt.NewManager(config.GlobalConfig.JWT.SecretKey),
 				hash.NewManager(),
-				toolsEmail.NewManager(toolsEmail.Config{
+				email.NewManager(email.Config{
 					Sender:   config.GlobalConfig.Email.Sender,
 					Password: config.GlobalConfig.Email.Password,
 					SMTPHost: config.GlobalConfig.Email.SMTPHost,
