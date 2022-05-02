@@ -226,7 +226,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.CommonResponse"
+                            "$ref": "#/definitions/views.TokensView"
                         }
                     },
                     "400": {
