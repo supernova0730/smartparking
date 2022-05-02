@@ -25,7 +25,6 @@ func (repo *ticketRepository) GetByID(id int64) (result models.Ticket, err error
 	err = repo.db.
 		Model(&models.Ticket{}).
 		Preload("Client").
-		Preload("Car").
 		Preload("ParkingPlace").
 		Preload("ParkingPlace.ParkingZone").
 		Where("id = ?", id).
@@ -44,7 +43,6 @@ func (repo *ticketRepository) GetBy(where models.Ticket) (result models.Ticket, 
 	err = repo.db.
 		Model(&models.Ticket{}).
 		Preload("Client").
-		Preload("Car").
 		Preload("ParkingPlace").
 		Preload("ParkingPlace.ParkingZone").
 		Where(&where).
@@ -86,7 +84,6 @@ func (repo *ticketRepository) GetAll() (result []models.Ticket, err error) {
 	err = repo.db.
 		Model(&models.Ticket{}).
 		Preload("Client").
-		Preload("Car").
 		Preload("ParkingPlace").
 		Preload("ParkingPlace.ParkingZone").
 		Find(&result).
@@ -104,7 +101,6 @@ func (repo *ticketRepository) GetAllBy(where models.Ticket) (result []models.Tic
 	err = repo.db.
 		Model(&models.Ticket{}).
 		Preload("Client").
-		Preload("Car").
 		Preload("ParkingPlace").
 		Preload("ParkingPlace.ParkingZone").
 		Where(&where).
@@ -123,7 +119,6 @@ func (repo *ticketRepository) GetAllExpired() (result []models.Ticket, err error
 	err = repo.db.
 		Model(&models.Ticket{}).
 		Preload("Client").
-		Preload("Car").
 		Preload("ParkingPlace").
 		Preload("ParkingPlace.ParkingZone").
 		Where("expires_at < now()").
