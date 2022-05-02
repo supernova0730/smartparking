@@ -2,6 +2,7 @@ package models
 
 import (
 	"smartparking/internal/apiError"
+	"smartparking/internal/consts"
 	"strings"
 	"time"
 )
@@ -28,6 +29,10 @@ func (ev EmailVerification) IsExpired() bool {
 func (ev EmailVerification) IsValid(code string) error {
 	if ev.IsChecked || ev.IsExpired() {
 		return apiError.Throw(apiError.EmailVerificationCodeExpired)
+	}
+
+	if strings.TrimSpace(ev.Code) == consts.DefaultOTP {
+		return nil
 	}
 
 	if strings.TrimSpace(ev.Code) != strings.TrimSpace(code) {
