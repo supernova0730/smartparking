@@ -160,7 +160,7 @@ func (ctl *AuthController) RefreshTokens(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Param checkDTO body dtos.CheckEmailVerificationDTO true "CheckEmailVerificationDTO"
-// @Success 200 {object} response.CommonResponse
+// @Success 200 {object} views.TokensView
 // @Failure 400 {object} validate.ValidationError
 // @Failure 500 {object} response.ErrorResponse
 // @Router /auth/verify [post]
@@ -179,12 +179,13 @@ func (ctl *AuthController) CheckEmailVerification(c *fiber.Ctx) error {
 		return err
 	}
 
-	err = ctl.m.Service().Auth().CheckEmailVerificationAndUpdatePassword(checkDTO.Email, checkDTO.Code)
+	token, err := ctl.m.Service().Auth().CheckEmailVerificationAndUpdatePassword(checkDTO.Email, checkDTO.Code)
 	if err != nil {
 		return err
 	}
 
-	return response.Success(c, response.CommonResponse{
-		Message: "password successfully changed",
+	return response.Success(c, views.TokensView{
+		AccessToken:  token.AccessToken,
+		RefreshToken: token.RefreshToken,
 	})
 }

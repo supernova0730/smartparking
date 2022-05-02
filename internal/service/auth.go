@@ -171,7 +171,7 @@ func (s *authService) GenerateEmailVerificationAndSendToClient(email, password s
 	return nil
 }
 
-func (s *authService) CheckEmailVerificationAndUpdatePassword(email, code string) (err error) {
+func (s *authService) CheckEmailVerificationAndUpdatePassword(email, code string) (tokens models.Tokens, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("authService.CheckEmailVerification failed", zap.Error(err), zap.String("email", email), zap.String("code", code))
@@ -196,14 +196,14 @@ func (s *authService) CheckEmailVerificationAndUpdatePassword(email, code string
 		return
 	}
 
-	_, err = s.m.Repository().Client().UpdateByEmail(email, models.Client{
+	client, err := s.m.Repository().Client().UpdateByEmail(email, models.Client{
 		Password: result.Password,
 	})
 	if err != nil {
 		return
 	}
 
-	return nil
+	return s.createSession(client.ID)
 }
 
 func (s *authService) generateVerificationCode() string {

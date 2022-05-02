@@ -11,5 +11,5 @@ type Auth interface {
 	ValidateToken(token string) (claims *jwt.Claims, err error)
 	RefreshTokens(refreshToken string) (tokens models.Tokens, err error)
 	GenerateEmailVerificationAndSendToClient(email, password string) (err error)
-	CheckEmailVerificationAndUpdatePassword(email, code string) (err error)
+	CheckEmailVerificationAndUpdatePassword(email, code string) (tokens models.Tokens, err error)
 }
