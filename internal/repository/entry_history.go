@@ -79,6 +79,7 @@ func (repo *entryHistoryRepository) GetAllByClientIDAndFilter(clientID int64, fi
 	err = repo.db.
 		Model(&models.EntryHistory{}).
 		Preload("ParkingZone").
+		Preload("Car").
 		Joins("Car").
 		Where("client_id = ?", clientID).
 		Scopes(func(db *gorm.DB) *gorm.DB {
