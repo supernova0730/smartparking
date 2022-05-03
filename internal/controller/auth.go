@@ -85,9 +85,17 @@ func (ctl *AuthController) Login(c *fiber.Ctx) error {
 		return err
 	}
 
-	return response.Success(c, views.TokensView{
-		AccessToken:  token.AccessToken,
-		RefreshToken: token.RefreshToken,
+	client, err := ctl.m.Service().Client().GetByEmail(loginDTO.Email)
+	if err != nil {
+		return err
+	}
+
+	return response.Success(c, fiber.Map{
+		"tokens": views.TokensView{
+			AccessToken:  token.AccessToken,
+			RefreshToken: token.RefreshToken,
+		},
+		"client": client.ToView(),
 	})
 }
 
