@@ -67,7 +67,7 @@ func (s *entryHistoryService) GetAllBy(where models.EntryHistory) (result models
 	return s.m.Repository().EntryHistory().GetAllBy(where)
 }
 
-func (s *entryHistoryService) GetAllByClientIDAndFilter(clientID int64, filter dtos.EntryHistoryFilter) (result models.ListEntryHistory, err error) {
+func (s *entryHistoryService) GetAllByClientIDAndFilter(clientID int64, filter dtos.EntryHistoryFilter) (result models.ListEntryHistory, total int64, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("entryHistoryService.GetAllByClientID", zap.Error(err), zap.Int64("clientID", clientID))

@@ -208,11 +208,14 @@ func (ctl *PersonalController) GetAllMyEntryHistories(c *fiber.Ctx) error {
 		return response.Error(c, fiber.StatusBadRequest, err)
 	}
 
-	entryHistories, err := ctl.m.Service().EntryHistory().GetAllByClientIDAndFilter(clientID, filter)
+	entryHistories, total, err := ctl.m.Service().EntryHistory().GetAllByClientIDAndFilter(clientID, filter)
 	if err != nil {
 		return err
 	}
 
 	result := entryHistories.ToPersonalEntryHistoryView()
-	return response.Success(c, result)
+	return response.Success(c, fiber.Map{
+		"rows":  result,
+		"total": total,
+	})
 }

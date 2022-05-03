@@ -9,6 +9,7 @@ import (
 
 type EntryHistoryFilter struct {
 	CarID          int64     `query:"car_id"`
+	ParkingZoneID  int64     `query:"parking_zone_id"`
 	SelectedPeriod string    `query:"selected_period"`
 	DateFrom       time.Time `query:"date_from"`
 	DateTo         time.Time `query:"date_to"`

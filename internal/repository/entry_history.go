@@ -69,7 +69,7 @@ func (repo *entryHistoryRepository) GetAllBy(where models.EntryHistory) (result 
 	return
 }
 
-func (repo *entryHistoryRepository) GetAllByClientIDAndFilter(clientID int64, filter dtos.EntryHistoryFilter) (result []models.EntryHistory, err error) {
+func (repo *entryHistoryRepository) GetAllByClientIDAndFilter(clientID int64, filter dtos.EntryHistoryFilter) (result []models.EntryHistory, total int64, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("entryHistoryRepository.GetAllByClientID failed", zap.Error(err), zap.Int64("clientID", clientID))
@@ -85,11 +85,15 @@ func (repo *entryHistoryRepository) GetAllByClientIDAndFilter(clientID int64, fi
 			if filter.CarID != 0 {
 				db = db.Where("car_id = ?", filter.CarID)
 			}
+			if filter.ParkingZoneID != 0 {
+				db = db.Where("parking_zone_id = ?", filter.ParkingZoneID)
+			}
 			if !filter.DateFrom.IsZero() && !filter.DateTo.IsZero() {
 				db = db.Where("time BETWEEN ? AND ?", filter.DateFrom, filter.DateTo)
 			}
 			return db
 		}).
+		Count(&total).
 		Order("time desc").
 		Offset(filter.Page * filter.Size).
 		Limit(filter.Size).
