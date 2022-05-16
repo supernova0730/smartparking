@@ -6,6 +6,6 @@ type TokensView struct {
 }
 
 type LoginView struct {
-	Client ClientView
-	Tokens TokensView
+	Client ClientView `json:"client,omitempty"`
+	Tokens TokensView `json:"tokens,omitempty"`
 }
