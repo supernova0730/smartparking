@@ -57,14 +57,14 @@ func (s *authService) SignUp(client models.Client) (result models.Client, err er
 	return s.m.Service().Client().Create(client)
 }
 
-func (s *authService) SignIn(client models.Client) (tokens models.Tokens, err error) {
+func (s *authService) SignIn(client models.Client) (result models.Client, tokens models.Tokens, err error) {
 	defer func() {
 		if err != nil {
 			logger.Log.Error("authService.Login failed", zap.Error(err), zap.Any("client", client))
 		}
 	}()
 
-	result, err := s.m.Service().Client().GetByEmail(client.Email)
+	result, err = s.m.Service().Client().GetByEmail(client.Email)
 	if err != nil {
 		return
 	}
@@ -74,7 +74,12 @@ func (s *authService) SignIn(client models.Client) (tokens models.Tokens, err er
 		return
 	}
 
-	return s.createSession(result.ID)
+	tokens, err = s.createSession(result.ID)
+	if err != nil {
+		return
+	}
+
+	return
 }
 
 func (s *authService) ValidateToken(token string) (claims *jwt.Claims, err error) {

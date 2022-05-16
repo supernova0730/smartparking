@@ -7,7 +7,7 @@ import (
 
 type Auth interface {
 	SignUp(model models.Client) (result models.Client, err error)
-	SignIn(model models.Client) (tokens models.Tokens, err error)
+	SignIn(model models.Client) (client models.Client, tokens models.Tokens, err error)
 	ValidateToken(token string) (claims *jwt.Claims, err error)
 	RefreshTokens(refreshToken string) (tokens models.Tokens, err error)
 	GenerateEmailVerificationAndSendToClient(email, password string) (err error)

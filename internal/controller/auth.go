@@ -80,21 +80,13 @@ func (ctl *AuthController) Login(c *fiber.Ctx) error {
 	}
 
 	model.SetFromLoginDTO(loginDTO)
-	token, err := ctl.m.Service().Auth().SignIn(model)
-	if err != nil {
-		return err
-	}
-
-	client, err := ctl.m.Service().Client().GetByEmail(loginDTO.Email)
+	client, token, err := ctl.m.Service().Auth().SignIn(model)
 	if err != nil {
 		return err
 	}
 
 	return response.Success(c, fiber.Map{
-		"tokens": views.TokensView{
-			AccessToken:  token.AccessToken,
-			RefreshToken: token.RefreshToken,
-		},
+		"tokens": token.ToView(),
 		"client": client.ToView(),
 	})
 }
@@ -156,10 +148,7 @@ func (ctl *AuthController) RefreshTokens(c *fiber.Ctx) error {
 		return err
 	}
 
-	return response.Success(c, views.TokensView{
-		AccessToken:  tokens.AccessToken,
-		RefreshToken: tokens.RefreshToken,
-	})
+	return response.Success(c, tokens.ToView())
 }
 
 // CheckEmailVerification godoc
@@ -187,13 +176,10 @@ func (ctl *AuthController) CheckEmailVerification(c *fiber.Ctx) error {
 		return err
 	}
 
-	token, err := ctl.m.Service().Auth().CheckEmailVerificationAndUpdatePassword(checkDTO.Email, checkDTO.Code)
+	tokens, err := ctl.m.Service().Auth().CheckEmailVerificationAndUpdatePassword(checkDTO.Email, checkDTO.Code)
 	if err != nil {
 		return err
 	}
 
-	return response.Success(c, views.TokensView{
-		AccessToken:  token.AccessToken,
-		RefreshToken: token.RefreshToken,
-	})
+	return response.Success(c, tokens.ToView())
 }
