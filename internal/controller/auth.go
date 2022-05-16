@@ -60,7 +60,7 @@ func (ctl *AuthController) Register(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Param loginDTO body dtos.LoginDTO true "LoginDTO"
-// @Success 200 {object} views.TokensView
+// @Success 200 {object} views.LoginView
 // @Failure 400 {object} validate.ValidationError
 // @Failure 500 {object} response.ErrorResponse
 // @Router /auth/login [post]
@@ -68,6 +68,7 @@ func (ctl *AuthController) Login(c *fiber.Ctx) error {
 	var (
 		loginDTO dtos.LoginDTO
 		model    models.Client
+		result   views.LoginView
 	)
 
 	err := c.BodyParser(&loginDTO)
@@ -85,10 +86,11 @@ func (ctl *AuthController) Login(c *fiber.Ctx) error {
 		return err
 	}
 
-	return response.Success(c, fiber.Map{
-		"tokens": token.ToView(),
-		"client": client.ToView(),
-	})
+	result = views.LoginView{
+		Client: client.ToView(),
+		Tokens: token.ToView(),
+	}
+	return response.Success(c, result)
 }
 
 // ForgetPassword godoc

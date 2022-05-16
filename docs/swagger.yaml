@@ -146,6 +146,13 @@ definitions:
       updated_at:
         type: string
     type: object
+  views.LoginView:
+    properties:
+      client:
+        $ref: '#/definitions/views.ClientView'
+      tokens:
+        $ref: '#/definitions/views.TokensView'
+    type: object
   views.ParkingPlaceDetailView:
     properties:
       id:
@@ -293,7 +300,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/views.TokensView'
+            $ref: '#/definitions/views.LoginView'
         "400":
           description: Bad Request
           schema:

@@ -91,7 +91,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/views.TokensView"
+                            "$ref": "#/definitions/views.LoginView"
                         }
                     },
                     "400": {
@@ -1042,6 +1042,17 @@ const docTemplate = `{
                 },
                 "updated_at": {
                     "type": "string"
+                }
+            }
+        },
+        "views.LoginView": {
+            "type": "object",
+            "properties": {
+                "client": {
+                    "$ref": "#/definitions/views.ClientView"
+                },
+                "tokens": {
+                    "$ref": "#/definitions/views.TokensView"
                 }
             }
         },
