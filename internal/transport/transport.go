@@ -20,8 +20,9 @@ func ServerStart() error {
 
 func initRest() *fiber.App {
 	app := fiber.New(fiber.Config{
-		JSONEncoder: json.Marshal,
-		JSONDecoder: json.Unmarshal,
+		JSONEncoder:           json.Marshal,
+		JSONDecoder:           json.Unmarshal,
+		DisableStartupMessage: true,
 	})
 
 	middlewares.RegisterMiddlewares(app)
